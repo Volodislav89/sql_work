@@ -1,23 +1,45 @@
-//package com.spring_sql.sql_work.controller;
-//
+package com.spring_sql.sql_work.controller;
+
 //import com.spring_sql.sql_work.model.Horse;
 //import com.spring_sql.sql_work.repository.HorseRepository;
-//import org.springframework.beans.factory.annotation.Autowired;
+import com.spring_sql.sql_work.model.Horse;
+import com.spring_sql.sql_work.service.HorseService;
+import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageRequest;
 //import org.springframework.data.domain.Sort;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//import java.util.Optional;
-//
-//@CrossOrigin
-//@RestController
-//@RequestMapping("/horse")
-//public class HorseController {
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/horse")
+public class HorseController {
+    HorseService horseService;
+
+    public HorseController(HorseService horseService) {
+        this.horseService = horseService;
+    }
 //    @Autowired
 //    HorseRepository horseRepository;
-//
+
+    @GetMapping
+    public List<Horse> getAll() {
+        return horseService.getAllHorses();
+    }
+
+    @GetMapping("/{id}")
+    public Horse getHorseById(@PathVariable Long id) {
+        return horseService.getHorseById(id);
+    }
+
+    @PostMapping("/save")
+    public void saveHorse(@RequestBody Horse horse) {
+        horseService.saveHorse(horse);
+    }
+
 //    @GetMapping
 //    public List<Horse> getAllHorses() {
 //        return horseRepository.findAll();
@@ -61,4 +83,4 @@
 //    public void deleteHorse(@PathVariable Long id) {
 //        horseRepository.deleteById(id);
 //    }
-//}
+}
